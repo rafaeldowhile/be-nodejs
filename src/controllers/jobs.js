@@ -1,4 +1,5 @@
 const {Op} = require("sequelize");
+const moment = require("moment");
 
 class JobsController {
     async findUnpaidJobs(req, res) {
@@ -74,6 +75,7 @@ class JobsController {
         profile.balance -= job.price;
         contractor.balance += job.price;
         job.paid = true;
+        job.paymentDate = moment();
 
         await profile.save();
         await job.save();
