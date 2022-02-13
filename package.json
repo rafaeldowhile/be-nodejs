@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "nodemon ./src/server.js",
+    "start:debug": "nodemon --inspect ./src/server.js",
     "seed": "node ./scripts/seedDb.js"
   },
   "devDependencies": {
