@@ -13,7 +13,7 @@ class ContractController {
                 {
                     model: Profile,
                     as: 'Client',
-                    where: {
+                    wher
                         id: req.profile.id
                     },
                     required: true,
