@@ -11,5 +11,4 @@ router.use(JobsRoutes);
 router.use(BalancesRoutes);
 router.use(AdminRoutes);
 
-
 module.exports = router;

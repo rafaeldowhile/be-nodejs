@@ -5,5 +5,4 @@ const BalancesController = require('../controllers/balances');
 
 router.post('/balances/deposit/:userId', getProfile, BalancesController.createDeposit)
 
-
 module.exports = router;

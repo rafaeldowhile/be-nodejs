@@ -1,26 +1,24 @@
+/**
+ * Base controller to add default methods to help standardize the error responses.
+ */
 class BaseController {
-    constructor() {
-    }
+  constructor() {}
 
-    jsonResponse = (
-        res, statusCode, message
-    ) => {
-        return res.status(statusCode).json({message})
-    }
+  jsonResponse = (res, statusCode, message) => {
+    return res.status(statusCode).json({ message });
+  };
 
-    applicationError = (res, errorMessage) => {
-        return this.jsonResponse(res, 400, errorMessage);
-    }
+  applicationError = (res, errorMessage) => {
+    return this.jsonResponse(res, 400, errorMessage);
+  };
 
-    notFound = (res, errorMessage) => {
-        return this.jsonResponse(res, 404, errorMessage);
-    }
+  notFound = (res, errorMessage) => {
+    return this.jsonResponse(res, 404, errorMessage);
+  };
 
-    notAuthorized = (res, errorMessage) => {
-        return this.jsonResponse(res, 401, errorMessage);
-    }
-
+  notAuthorized = (res, errorMessage) => {
+    return this.jsonResponse(res, 401, errorMessage);
+  };
 }
 
-
-module.exports = BaseController
+module.exports = BaseController;

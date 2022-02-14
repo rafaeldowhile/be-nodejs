@@ -13,10 +13,12 @@ You can use the following command to run.
 $ npm test
 ```
 
-First, it's going to run the **pretest** script from package.json. Basically, it's going to create a new **
-database_testing.sqlite3** for testing purposes only.
+First, it's going to run the **pretest** script from package.json. It's going to create a new ``database_testing.sqlite3`` file for testing purposes only.
 
-- A new javascript file has been added at ``scrips/seedDbTesting.js`` - it's a clone from ``scripts/seedDbTesting.js``.
+- A new javascript file has been added in the project at ``scrips/seedDbTesting.js`` - it's a clone from ``scripts/seedDbTesting.js``.
+
+### Sequelize
+I have a good understanding of Sequelize, so I tried creating all queries using their tools. I understand that we can split those long queries into smaller chunks to increase the readability.
 
 ## Directories
 
@@ -30,11 +32,23 @@ It's just the tools that I used to complete the assessment.
 ### controllers
 
 The basic structure to move the code from `app.js`. At this directory, there are a few lines of code that could be moved
-to another layer - like **services** - but since it's a simple code, I considered that hasn't needed'.
+to another layer - like **services** to isolate the logic for common routines - but since it's a simple code, I considered that it hasn't needed'.
 
 ### routes
 
 Just separating the routes in different files to enhance files structure.
+
+### Improvement Checklist 
+- [x] Routes
+- [x] Controller
+- [ ] Include express-validator to improve security and standardization
+- [ ] Logging
+- [ ] Refactor **model.js** file. Currently, a newer version of sequelize comes with models/index.js file that improves that readability.
+- [ ] Service layer - better remove logic from controllers.
+- [ ] Tests for **balances**
+- [ ] Improve tests for **jobs**
+- [ ] ESLint + prettier 
+- [ ] Swagger docs
 
 ****
 
