@@ -78,6 +78,52 @@ class AdminController {
 
     getBestClients = async (req, res) => {
 
+        const {start, end} = this.prepareDates(req.query, res);
+        const limit = req.query.limit || 2;
+        const {Job, Contract, Profile} = req.app.get('models');
+
+        let result = await Job.findAll({
+            where: {
+                paid: true,
+                paymentDate: {
+                    [Op.between]: [start, end]
+                }
+            },
+            include: [
+                {
+                    model: Contract,
+                    as: 'Contract',
+                    required: true,
+                    attributes: [],
+                    include: [
+                        {
+                            model: Profile,
+                            as: 'Client',
+                            where: {
+                                type: 'client'
+                            },
+                            attributes: []
+                        },
+                    ]
+                }
+            ],
+            raw: true,
+            group: ['Contract.Client.id'],
+            attributes: ['Contract.Client.id', 'Contract.Client.firstName', 'Contract.Client.lastName', [sequelize.fn('sum', sequelize.col('price')), 'paid']],
+            order: [[sequelize.col('paid'), 'DESC']],
+            limit: limit
+        })
+
+        result = result.map(item => {
+            item.fullName = [item.firstName, item.lastName].join(' ');
+
+            delete item.firstName;
+            delete item.lastName;
+
+            return item
+        })
+
+        return res.json(result);
     };
 }
 
