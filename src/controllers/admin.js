@@ -143,6 +143,7 @@ class AdminController extends BaseController {
       limit: limit,
     });
 
+    // Customize the response
     result = result.map((item) => {
       item.fullName = [item.firstName, item.lastName].join(" ");
 

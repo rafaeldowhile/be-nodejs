@@ -41,6 +41,7 @@ Just separating the routes in different files to enhance files structure.
 ### Improvement Checklist 
 - [x] Routes
 - [x] Controller
+- [x] Tests
 - [ ] Include express-validator to improve security and standardization
 - [ ] Logging
 - [ ] Refactor **model.js** file. Currently, a newer version of sequelize comes with models/index.js file that improves that readability.
