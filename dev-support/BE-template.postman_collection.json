@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "fdebb732-8ad6-41dc-b7fd-7c48ff3cab33",
+		"name": "BE-template",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Contracts",
+			"item": [
+				{
+					"name": "Find Contract by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "profile_id",
+								"value": "1",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/contracts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"contracts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Contracts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "profile_id",
+								"value": "3",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/contracts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"contracts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "Find Unpaid Jobs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "profile_id",
+								"value": "1",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/jobs/unpaid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"jobs",
+								"unpaid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay job by id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "profile_id",
+								"value": "1",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/jobs/2/pay",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"jobs",
+								"2",
+								"pay"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Balances",
+			"item": [
+				{
+					"name": "Add deposit for user (client)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "profile_id",
+								"value": "1",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"credit\": 100.5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/balances/deposit/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"balances",
+								"deposit",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Best Professions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/admin/best-profession?start=08-01-2020&end=09-01-2020",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"admin",
+								"best-profession"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "08-01-2020"
+								},
+								{
+									"key": "end",
+									"value": "09-01-2020"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients that paid most",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/admin/best-clients?start=08-01-2020&end=09-01-2020",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"admin",
+								"best-clients"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "08-01-2020"
+								},
+								{
+									"key": "end",
+									"value": "09-01-2020"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
