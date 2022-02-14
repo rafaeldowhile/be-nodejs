@@ -1,11 +1,9 @@
 const {Op} = require("sequelize");
 const moment = require("moment");
 const {sequelize} = require("../model");
+const BaseController = require("./base");
 
-class AdminController {
-
-    constructor() {
-    }
+class AdminController extends BaseController {
 
     prepareDates = (query, res) => {
         let {start, end} = query;
@@ -14,18 +12,14 @@ class AdminController {
         const isEndValid = moment(end, 'MM-DD-YYYY', true).isValid();
 
         if (!isStartValid || !isEndValid) {
-            return res.status(400).json({
-                message: 'Please provide the start and end dates in the following MM-DD-YYYY.'
-            })
+            return this.applicationError(res, 'Please provide the start and end dates in the following MM-DD-YYYY.')
         }
 
         start = moment(start, 'MM-DD-YYYY');
         end = moment(end, 'MM-DD-YYYY');
 
         if (end < start) {
-            return res.status(400).json({
-                message: 'Wrong dates.'
-            })
+            return this.applicationError(res, 'The start date has to be before the end date.')
         }
 
         start.startOf('day');
@@ -40,6 +34,11 @@ class AdminController {
     getBestProfession = async (req, res) => {
 
         const {start, end} = this.prepareDates(req.query, res);
+
+        if (!start || !end) {
+            return;
+        }
+
         const {Job, Contract, Profile} = req.app.get('models');
 
         const result = await Job.findOne({
@@ -80,6 +79,11 @@ class AdminController {
 
         const {start, end} = this.prepareDates(req.query, res);
         const limit = req.query.limit || 2;
+
+        if (!start || !end) {
+            return;
+        }
+
         const {Job, Contract, Profile} = req.app.get('models');
 
         let result = await Job.findAll({

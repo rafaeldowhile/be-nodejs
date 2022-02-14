@@ -1,21 +1,20 @@
 const {Op} = require("sequelize");
 const {sequelize} = require("../model");
+const BaseController = require("./base");
 const TAX_FEE = 0.25;
 
-class BalancesController {
+class BalancesController extends BaseController {
 
-    async createDeposit(req, res) {
+    createDeposit = async (req, res) => {
         const {Job, Contract, Profile} = req.app.get('models');
         const profile = await Profile.findByPk(req.params.userId);
 
         if (!profile) {
-            return res.status(404).end();
+            return this.notFound(res, "Client not found")
         }
 
         if (profile.type !== 'client') {
-            return res.status(400).json({
-                message: `You don't have the rights to execute this operation.`
-            })
+            return this.notAuthorized(res, `You don't have the rights to execute this operation.`)
         }
 
         // Fetch all jobs that are pending payment.
@@ -46,11 +45,7 @@ class BalancesController {
         const allowedDepositFee = amountJobsToPay * TAX_FEE;
 
         if (req.body.credit > allowedDepositFee) {
-            return res.status(400).json({
-                message: `You cannot deposit more than 25% of your current pending jobs. You're allowed to deposit ${allowedDepositFee}.`,
-                amountJobsToPay,
-                depositCut: allowedDepositFee
-            })
+            return this.applicationError(res, `You cannot deposit more than 25% of your current pending jobs. You're allowed to deposit ${allowedDepositFee}.`)
         }
 
         profile.balance += req.body.credit;

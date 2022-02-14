@@ -4,19 +4,29 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cross-env": "^7.0.3",
     "express": "4.17.1",
     "moment": "^2.29.1",
     "sequelize": "^6.3.4",
-    "sqlite3": "^4.0.1"
+    "sqlite3": "^4.0.1",
+    "url-join": "^4.0.1"
   },
   "scripts": {
     "start": "nodemon ./src/server.js",
+    "pretest": "cross-env NODE_ENV=test node ./scripts/seedDbTesting.js",
     "start:debug": "nodemon --inspect ./src/server.js",
-    "seed": "node ./scripts/seedDb.js"
+    "seed": "node ./scripts/seedDb.js",
+    "test": "jest"
   },
   "devDependencies": {
     "concurrently": "4.1.0",
-    "nodemon": "1.19.1"
+    "jest": "^27.5.1",
+    "nodemon": "1.19.1",
+    "supertest": "^6.2.2"
+  },
+  "jest": {
+    "verbose": false,
+    "testEnvironment": "node"
   },
   "engines": {
     "node": ">=10.16.3"

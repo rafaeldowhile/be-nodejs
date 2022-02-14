@@ -1,8 +1,10 @@
 const {Op} = require("sequelize");
 const moment = require("moment");
+const BaseController = require("./base");
 
-class JobsController {
-    async findUnpaidJobs(req, res) {
+class JobsController extends BaseController {
+
+    findUnpaidJobs = async (req, res) => {
         const {Job, Contract} = req.app.get('models')
 
         const jobs = await Job.findAndCountAll({
@@ -30,22 +32,26 @@ class JobsController {
             ]
         })
 
-        if (!jobs) return res.status(404).end()
+        if (!jobs) return this.notFound("Jobs not found")
+
         return res.json(jobs)
     }
 
-    async payJob(req, res) {
+    payJob = async (req, res) => {
         const profile = req.profile;
 
         if (profile.type !== 'client') {
-            return res.status(400).json({
-                message: `You don't have the rights to execute this operation.`
-            })
+            return this.notAuthorized(res, `You don't have the rights to execute this operation.`)
         }
 
         const {Job, Contract, Profile} = req.app.get('models');
 
         const job = await Job.findByPk(req.params.job_id, {
+            where: {
+                paid: {
+                    [Op.or]: [null, 0]
+                },
+            },
             include: [
                 {
                     model: Contract,
@@ -61,15 +67,13 @@ class JobsController {
         })
 
         if (!job) {
-            return res.status(404).end()
+            return this.notFound(res, "Job not found")
         }
 
         const contractor = await Profile.findOne({where: {id: job.Contract.ContractorId}});
 
         if (profile.balance < job.price) {
-            return res.status(400).json({
-                message: `You don't have enough credits to execute this operation.`
-            })
+            return this.applicationError(res, `You don't have enough credits to execute this operation.`)
         }
 
         profile.balance -= job.price;
@@ -81,7 +85,7 @@ class JobsController {
         await job.save();
         await contractor.save();
 
-        return res.status(200).json({
+        return res.json({
             message: 'Job paid successfully'
         })
     };

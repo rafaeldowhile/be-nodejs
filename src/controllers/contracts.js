@@ -1,8 +1,10 @@
 const {Op} = require("sequelize");
+const BaseController = require("./base");
 
-class ContractController {
-    async findAll(req, res) {
+class ContractController extends BaseController {
+    findAll = async (req, res) => {
         const {Contract} = req.app.get('models')
+
         const contract = await Contract.findAndCountAll({
             where: {
                 status: {
@@ -15,14 +17,15 @@ class ContractController {
             },
         })
 
-        if (!contract) return res.status(404).end()
+        if (!contract) return this.notFound("Contracts not found")
 
-        res.json(contract)
-    }
+        return res.json(contract)
+    };
 
-    async findById(req, res) {
+    findById = async (req, res) => {
         const {Contract, Profile} = req.app.get('models')
         const {id} = req.params
+
         const contract = await Contract.findOne({
             where: {id},
             include: [
@@ -37,8 +40,10 @@ class ContractController {
                 },
             ],
         })
-        if (!contract) return res.status(404).end()
-        res.json(contract)
+
+        if (!contract) return this.notFound("Contract not found")
+
+        return res.json(contract)
     };
 }
 
